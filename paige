@@ -1,0 +1,8 @@
+#@title 00. Input
+from google.colab import drive
+drive.mount('/content/gdrive')
+
+import pandas as pd
+import numpy as np
+import math
+import datetime as dt
