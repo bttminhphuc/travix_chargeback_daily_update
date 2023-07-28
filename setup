@@ -6,3 +6,8 @@ import pandas as pd
 import numpy as np
 import math
 import datetime as dt
+
+from google.colab import auth
+auth.authenticate_user()
+
+from google.cloud import bigquery
