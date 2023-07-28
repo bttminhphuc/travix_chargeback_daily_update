@@ -1,0 +1,30 @@
+#@title 1. Clean NONMOR data
+# !pip install --upgrade --quiet gspread
+!pip install 'google-auth==1.7.2'
+
+# from google.colab import auth
+# auth.authenticate_user()
+
+import gspread
+from oauth2client.client import GoogleCredentials
+gc=gspread.authorize(GoogleCredentials.get_application_default())
+
+sh=gc.open_by_url('https://docs.google.com/spreadsheets/d/1NsGNSXN4Ikhf_U4WMWq7LiMoImMJQe3dLgLS5TtSNe0/edit#gid=0')
+
+worksheet=sh.worksheet("Non Mor")
+values_list=worksheet.get_all_values()
+cbk=pd.DataFrame.from_records(values_list)
+cbk=cbk.iloc[1:,[10,11]]
+cbk.columns=['Date Received', 'Traxx Order ID']
+print ('Shape of original table')
+print(cbk.shape)
+cbk=cbk[(cbk['Traxx Order ID']!='')]
+# cbk['test']=1
+print ('\n')
+print ('Shape after remove blank rows')
+print(cbk.shape)
+# # cbk['Traxx Order ID'] = cbk['Traxx Order ID'].str.replace(' ', '')
+# # cbk['Traxx Order ID'] = cbk['Traxx Order ID'].str.replace('\n', '')
+# # cbk['Traxx Order ID'] = cbk['Traxx Order ID'].str.replace('\r', '')
+
+cbk
